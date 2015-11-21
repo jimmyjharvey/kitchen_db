@@ -22,6 +22,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FoodWindow {
 
@@ -187,13 +189,36 @@ public class FoodWindow {
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if(comboBox.getSelectedItem() != null){
-					textField_2.setText(((Food)comboBox.getSelectedItem()).getName());
-					textField.setText(((Food)comboBox.getSelectedItem()).getDescription());
-					textField_1.setText("" + ((Food)comboBox.getSelectedItem()).getQty());
-					textField_3.setText("" + ((Food)comboBox.getSelectedItem()).getMinQty());
-					textField_4.setText(((Food)comboBox.getSelectedItem()).getStandardMeasure());
-					comboBox_1.setSelectedItem(storeMap.get(((Food)comboBox.getSelectedItem()).getPreferredStore()));
+					Food x = (Food)comboBox.getSelectedItem();
+					textField_2.setText(x.getName());
+					textField.setText(x.getDescription());
+					textField_1.setText("" + x.getQty());
+					textField_3.setText("" + x.getMinQty());
+					textField_4.setText(x.getStandardMeasure());
+					comboBox_1.setSelectedItem(storeMap.get(x.getPreferredStore()));
 				}
+			}
+		});
+
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(comboBox.getSelectedItem() != null){
+					Food x = (Food)comboBox.getSelectedItem();
+					try{
+						DBConn.updateDB(
+								"UPDATE FOOD SET FoodName=\"" + textField_2.getText() 
+								+ "\",FoodDescription=\"" + textField.getText() 
+								+ "\",InventoryQty=\"" + textField_1.getText() 
+								+ "\",MinQty=\"" + textField_3.getText() 
+								+ "\",StandardMeasure=\"" + textField_4.getText() 
+								+ "\",PreferredStore=\"" + ((Store)comboBox_1.getSelectedItem()).getId()
+								+ "\" WHERE FoodID=" + ((Food)comboBox.getSelectedItem()).getId() + ";");
+					} catch (Exception e){
+						e.printStackTrace();
+					}
+				}
+				
 			}
 		});
 	}

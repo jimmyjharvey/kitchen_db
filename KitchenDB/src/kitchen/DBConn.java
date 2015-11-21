@@ -36,5 +36,11 @@ public class DBConn {
 		Statement qs = conn.createStatement();
 		return qs.executeQuery(query);
 	}
+	
+	public static boolean updateDB(String query) throws SQLException{
+		Connection conn = DBConn.getConnection();
+		Statement qs = conn.createStatement();
+		return qs.execute(query);
+	}
 
 }
