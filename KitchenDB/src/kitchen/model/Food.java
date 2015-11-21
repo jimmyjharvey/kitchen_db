@@ -29,7 +29,7 @@ public class Food {
 	public int getQty(){return qty;}
 	public int getMinQty(){return minQty;}
 	public String getStandardMeasure(){return standardMeasure;}
-	public int preferredStore(){return preferredStore;}
+	public int getPreferredStore(){return preferredStore;}
 	
 	public void addStoreInventory(Store store, Inventory inv){
 		foodStore.put(store, inv);

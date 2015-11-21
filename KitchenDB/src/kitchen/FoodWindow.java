@@ -5,18 +5,32 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+
+import kitchen.model.Food;
+import kitchen.model.Store;
+
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
 
 public class FoodWindow {
 
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField textField_2;
+	private JTextField textField_4;
 
 	/**
 	 * Launch the application.
@@ -37,85 +51,56 @@ public class FoodWindow {
 	/**
 	 * Create the application.
 	 */
-	public FoodWindow() {
+	public FoodWindow() throws SQLException{
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() throws SQLException {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 18));
-		frame.setBounds(100, 100, 1092, 720);
+		frame.setBounds(100, 100, 800, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("Add New Item ");
-		btnNewButton.setBounds(96, 516, 210, 25);
+		JButton btnNewButton = new JButton("Save");
+		btnNewButton.setBounds(37, 346, 106, 25);
 		frame.getContentPane().add(btnNewButton);
-		
-		JComboBox comboBox = new JComboBox();
+
+		JComboBox<Food> comboBox = new JComboBox<Food>();
+		comboBox.addItem(new Food(47, "Pizza", "Yummy yummy Pizza", 3, 1, "PizzaPie", 1));
 		comboBox.setToolTipText("Select Item ");
-		comboBox.setBounds(26, 194, 265, 24);
+		comboBox.setBounds(26, 144, 265, 24);
+		comboBox.setSelectedItem(null);
 		frame.getContentPane().add(comboBox);
 		
 		JLabel lblTestLabel = new JLabel("FOOD");
 		lblTestLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblTestLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTestLabel.setBounds(53, 118, 200, 50);
+		lblTestLabel.setBounds(26, 83, 200, 50);
 		frame.getContentPane().add(lblTestLabel);
 		
-		JLabel lblNewLabel = new JLabel("Drop down  FOOD name in alphabetical order ");
-		lblNewLabel.setBounds(53, 223, 200, 50);
-		frame.getContentPane().add(lblNewLabel);
-		
 		textField = new JTextField();
-		textField.setBounds(404, 195, 210, 22);
+		textField.setBounds(490, 145, 249, 22);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblDisplayFoodDescription = new JLabel("display FOOD Description");
-		lblDisplayFoodDescription.setBounds(410, 230, 204, 16);
-		frame.getContentPane().add(lblDisplayFoodDescription);
-		
 		textField_1 = new JTextField();
-		textField_1.setBounds(811, 207, 116, 22);
+		textField_1.setBounds(490, 178, 116, 22);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
-		JLabel lblFoodInventoryQty = new JLabel("food Inventory qty");
-		lblFoodInventoryQty.setBounds(811, 257, 210, 16);
-		frame.getContentPane().add(lblFoodInventoryQty);
-		
-		JLabel lblOnHand = new JLabel("On Hand");
+		JLabel lblOnHand = new JLabel("Qty");
 		lblOnHand.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblOnHand.setBounds(811, 164, 131, 16);
+		lblOnHand.setBounds(340, 184, 131, 16);
 		frame.getContentPane().add(lblOnHand);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(534, 301, 116, 22);
-		frame.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(379, 301, 116, 22);
+		textField_3.setBounds(490, 211, 116, 22);
 		frame.getContentPane().add(textField_3);
-		
-		JLabel lblFoodMinqty = new JLabel("FOOD MinQty");
-		lblFoodMinqty.setBounds(379, 319, 200, 50);
-		frame.getContentPane().add(lblFoodMinqty);
-		
-		JLabel lblBuyQty = new JLabel("Buy qty");
-		lblBuyQty.setBounds(576, 336, 56, 16);
-		frame.getContentPane().add(lblBuyQty);
-		
-		JLabel lblMinimumBuyQty = new JLabel("Minimum       Buy qty");
-		lblMinimumBuyQty.setHorizontalAlignment(SwingConstants.LEFT);
-		lblMinimumBuyQty.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblMinimumBuyQty.setBounds(379, 237, 289, 50);
-		frame.getContentPane().add(lblMinimumBuyQty);
 		
 		JLabel lblKaransKitchen = new JLabel("KARAN'S KITCHEN");
 		lblKaransKitchen.setHorizontalAlignment(SwingConstants.LEFT);
@@ -123,25 +108,87 @@ public class FoodWindow {
 		lblKaransKitchen.setBounds(357, 28, 311, 50);
 		frame.getContentPane().add(lblKaransKitchen);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(756, 301, 200, 50);
+		JLabel lblMin = new JLabel("Min Qty");
+		lblMin.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblMin.setBounds(340, 213, 131, 16);
+		frame.getContentPane().add(lblMin);
+		
+		JLabel lblDescription = new JLabel("Description");
+		lblDescription.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblDescription.setBounds(340, 151, 131, 16);
+		frame.getContentPane().add(lblDescription);
+		
+		JLabel lblName = new JLabel("Name");
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblName.setBounds(340, 112, 131, 16);
+		frame.getContentPane().add(lblName);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(490, 111, 116, 22);
+		frame.getContentPane().add(textField_2);
+		
+		JLabel lblStdmeasure = new JLabel("Std Measure");
+		lblStdmeasure.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblStdmeasure.setBounds(340, 241, 131, 16);
+		frame.getContentPane().add(lblStdmeasure);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(490, 241, 116, 22);
+		frame.getContentPane().add(textField_4);
+		
+		JLabel lblPreferredStore = new JLabel("Preferred Store");
+		lblPreferredStore.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblPreferredStore.setBounds(340, 270, 151, 16);
+		frame.getContentPane().add(lblPreferredStore);
+
+		JComboBox<Store> comboBox_1 = new JComboBox<Store>();
+		ResultSet storeQuery = getStores();
+		while(storeQuery.next()){
+			comboBox_1.addItem(
+				new Store(
+					storeQuery.getInt("StoreID"), 
+					storeQuery.getString("StoreName"), 
+					storeQuery.getString("StoreHours"), 
+					storeQuery.getString("ClubCardNumber"),
+					storeQuery.getString("Address")
+				)
+			);
+		}
+		comboBox_1.setToolTipText("Select Item ");
+		comboBox_1.setSelectedItem(null);
+		comboBox_1.setBounds(490, 271, 131, 24);
 		frame.getContentPane().add(comboBox_1);
 		
-		JLabel lblDisplayPreferredStore = new JLabel("display preferred store for FOOD FOODID");
-		lblDisplayPreferredStore.setBounds(766, 372, 255, 16);
-		frame.getContentPane().add(lblDisplayPreferredStore);
+		JButton btnNewItem = new JButton("New Item");
+		btnNewItem.setBounds(166, 347, 106, 25);
+		frame.getContentPane().add(btnNewItem);
 		
-		JButton btnEditItem = new JButton("Edit Item");
-		btnEditItem.setBounds(379, 516, 210, 25);
-		frame.getContentPane().add(btnEditItem);
+		HashMap<Integer, Store> storeMap = new HashMap<>();
+		for(int i=0; i < comboBox_1.getItemCount(); i++){
+			Store x = (Store) comboBox_1.getItemAt(i);
+			storeMap.put(x.getId(), x);
+		}
 		
-		JLabel label = new JLabel("New label");
-		label.setBounds(756, 413, 200, 50);
-		frame.getContentPane().add(label);
-		
-		JLabel lblTheDropDown = new JLabel("the drop down displays store name  ");
-		lblTheDropDown.setBounds(750, 401, 206, 16);
-		frame.getContentPane().add(lblTheDropDown);
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(comboBox.getSelectedItem() != null){
+					textField_2.setText(((Food)comboBox.getSelectedItem()).getName());
+					textField.setText(((Food)comboBox.getSelectedItem()).getDescription());
+					textField_1.setText("" + ((Food)comboBox.getSelectedItem()).getQty());
+					textField_3.setText("" + ((Food)comboBox.getSelectedItem()).getMinQty());
+					textField_4.setText(((Food)comboBox.getSelectedItem()).getStandardMeasure());
+					comboBox_1.setSelectedItem(storeMap.get(((Food)comboBox.getSelectedItem()).getPreferredStore()));
+				}
+			}
+		});
+	}
+	
+	public static ResultSet getStores() throws SQLException{
+		Connection conn = DatabaseConnection.getConnection();
+		Statement qs = conn.createStatement();
+		return qs.executeQuery("SELECT * FROM STORE");
 	}
 }
 
