@@ -17,26 +17,20 @@ import kitchen.model.Store;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class FoodWindow {
-
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_3;
-	private JTextField textField_2;
-	private JTextField textField_4;
+	private JTextField textFieldDescription;
+	private JTextField textFieldQty;
+	private JTextField textFieldMinQty;
+	private JTextField textFieldName;
+	private JTextField textFieldStandardMeasure;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -50,16 +44,10 @@ public class FoodWindow {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public FoodWindow() throws SQLException{
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() throws SQLException {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -97,25 +85,25 @@ public class FoodWindow {
 		lblTestLabel.setBounds(26, 83, 200, 50);
 		frame.getContentPane().add(lblTestLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(490, 145, 249, 22);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textFieldDescription = new JTextField();
+		textFieldDescription.setBounds(490, 145, 249, 22);
+		frame.getContentPane().add(textFieldDescription);
+		textFieldDescription.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(490, 178, 116, 22);
-		frame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		textFieldQty = new JTextField();
+		textFieldQty.setBounds(490, 178, 116, 22);
+		frame.getContentPane().add(textFieldQty);
+		textFieldQty.setColumns(10);
 		
 		JLabel lblOnHand = new JLabel("Qty");
 		lblOnHand.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblOnHand.setBounds(340, 184, 131, 16);
 		frame.getContentPane().add(lblOnHand);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(490, 211, 116, 22);
-		frame.getContentPane().add(textField_3);
+		textFieldMinQty = new JTextField();
+		textFieldMinQty.setColumns(10);
+		textFieldMinQty.setBounds(490, 211, 116, 22);
+		frame.getContentPane().add(textFieldMinQty);
 		
 		JLabel lblKaransKitchen = new JLabel("KARAN'S KITCHEN");
 		lblKaransKitchen.setHorizontalAlignment(SwingConstants.LEFT);
@@ -138,30 +126,30 @@ public class FoodWindow {
 		lblName.setBounds(340, 112, 131, 16);
 		frame.getContentPane().add(lblName);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(490, 111, 116, 22);
-		frame.getContentPane().add(textField_2);
+		textFieldName = new JTextField();
+		textFieldName.setColumns(10);
+		textFieldName.setBounds(490, 111, 116, 22);
+		frame.getContentPane().add(textFieldName);
 		
 		JLabel lblStdmeasure = new JLabel("Std Measure");
 		lblStdmeasure.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblStdmeasure.setBounds(340, 241, 131, 16);
 		frame.getContentPane().add(lblStdmeasure);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(490, 241, 116, 22);
-		frame.getContentPane().add(textField_4);
+		textFieldStandardMeasure = new JTextField();
+		textFieldStandardMeasure.setColumns(10);
+		textFieldStandardMeasure.setBounds(490, 241, 116, 22);
+		frame.getContentPane().add(textFieldStandardMeasure);
 		
 		JLabel lblPreferredStore = new JLabel("Preferred Store");
 		lblPreferredStore.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblPreferredStore.setBounds(340, 270, 151, 16);
 		frame.getContentPane().add(lblPreferredStore);
 
-		JComboBox<Store> comboBox_1 = new JComboBox<Store>();
+		JComboBox<Store> comboBoxPreferredStore = new JComboBox<Store>();
 		ResultSet storeQuery = DBConn.getResults("SELECT * FROM STORE;");
 		while(storeQuery.next()){
-			comboBox_1.addItem(
+			comboBoxPreferredStore.addItem(
 				new Store(
 					storeQuery.getInt("StoreID"), 
 					storeQuery.getString("StoreName"), 
@@ -171,18 +159,18 @@ public class FoodWindow {
 				)
 			);
 		}
-		comboBox_1.setToolTipText("Select Item ");
-		comboBox_1.setSelectedItem(null);
-		comboBox_1.setBounds(490, 271, 131, 24);
-		frame.getContentPane().add(comboBox_1);
+		comboBoxPreferredStore.setToolTipText("Select Item ");
+		comboBoxPreferredStore.setSelectedItem(null);
+		comboBoxPreferredStore.setBounds(490, 271, 131, 24);
+		frame.getContentPane().add(comboBoxPreferredStore);
 		
 		JButton btnNewItem = new JButton("New Item");
 		btnNewItem.setBounds(166, 347, 106, 25);
 		frame.getContentPane().add(btnNewItem);
 		
 		HashMap<Integer, Store> storeMap = new HashMap<>();
-		for(int i=0; i < comboBox_1.getItemCount(); i++){
-			Store x = (Store) comboBox_1.getItemAt(i);
+		for(int i=0; i < comboBoxPreferredStore.getItemCount(); i++){
+			Store x = (Store) comboBoxPreferredStore.getItemAt(i);
 			storeMap.put(x.getId(), x);
 		}
 		
@@ -190,12 +178,12 @@ public class FoodWindow {
 			public void itemStateChanged(ItemEvent arg0) {
 				if(comboBox.getSelectedItem() != null){
 					Food x = (Food)comboBox.getSelectedItem();
-					textField_2.setText(x.getName());
-					textField.setText(x.getDescription());
-					textField_1.setText("" + x.getQty());
-					textField_3.setText("" + x.getMinQty());
-					textField_4.setText(x.getStandardMeasure());
-					comboBox_1.setSelectedItem(storeMap.get(x.getPreferredStore()));
+					textFieldName.setText(x.getName());
+					textFieldDescription.setText(x.getDescription());
+					textFieldQty.setText("" + x.getQty());
+					textFieldMinQty.setText("" + x.getMinQty());
+					textFieldStandardMeasure.setText(x.getStandardMeasure());
+					comboBoxPreferredStore.setSelectedItem(storeMap.get(x.getPreferredStore()));
 				}
 			}
 		});
@@ -204,12 +192,12 @@ public class FoodWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				comboBox.setSelectedItem(null);
-				textField_2.setText("");
-				textField.setText("");
-				textField_1.setText("");
-				textField_3.setText("");
-				textField_4.setText("");
-				comboBox_1.setSelectedItem(null);
+				textFieldName.setText("");
+				textFieldDescription.setText("");
+				textFieldQty.setText("");
+				textFieldMinQty.setText("");
+				textFieldStandardMeasure.setText("");
+				comboBoxPreferredStore.setSelectedItem(null);
 			}
 		});
 
@@ -220,12 +208,12 @@ public class FoodWindow {
 					Food x = (Food)comboBox.getSelectedItem();
 					try{
 						DBConn.updateDB(
-								"UPDATE FOOD SET FoodName=\"" + textField_2.getText() 
-								+ "\",FoodDescription=\"" + textField.getText() 
-								+ "\",InventoryQty=\"" + textField_1.getText() 
-								+ "\",MinQty=\"" + textField_3.getText() 
-								+ "\",StandardMeasure=\"" + textField_4.getText() 
-								+ "\",PreferredStore=\"" + ((Store)comboBox_1.getSelectedItem()).getId()
+								"UPDATE FOOD SET FoodName=\"" + textFieldName.getText() 
+								+ "\",FoodDescription=\"" + textFieldDescription.getText() 
+								+ "\",InventoryQty=\"" + textFieldQty.getText() 
+								+ "\",MinQty=\"" + textFieldMinQty.getText() 
+								+ "\",StandardMeasure=\"" + textFieldStandardMeasure.getText() 
+								+ "\",PreferredStore=\"" + ((Store)comboBoxPreferredStore.getSelectedItem()).getId()
 								+ "\" WHERE FoodID=" + ((Food)comboBox.getSelectedItem()).getId() + ";");
 					} catch (Exception e){
 						e.printStackTrace();
@@ -233,12 +221,12 @@ public class FoodWindow {
 				} else {
 					try{
 						DBConn.updateDB(
-								"INSERT INTO FOOD VALUES (NULL, \"" + textField_2.getText() 
-								+ "\",\"" + textField.getText() 
-								+ "\"," + textField_1.getText() 
-								+ "," + textField_3.getText() 
-								+ ",\"" + textField_4.getText() 
-								+ "\",\"" + ((Store)comboBox_1.getSelectedItem()).getId()
+								"INSERT INTO FOOD VALUES (NULL, \"" + textFieldName.getText() 
+								+ "\",\"" + textFieldDescription.getText() 
+								+ "\"," + textFieldQty.getText() 
+								+ "," + textFieldMinQty.getText() 
+								+ ",\"" + textFieldStandardMeasure.getText() 
+								+ "\",\"" + ((Store)comboBoxPreferredStore.getSelectedItem()).getId()
 								+ "\");");
 					} catch (Exception e){
 						e.printStackTrace();
@@ -257,4 +245,3 @@ public class FoodWindow {
 	}
 	
 }
-
