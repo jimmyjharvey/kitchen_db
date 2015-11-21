@@ -199,6 +199,19 @@ public class FoodWindow {
 				}
 			}
 		});
+		
+		btnNewItem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				comboBox.setSelectedItem(null);
+				textField_2.setText("");
+				textField.setText("");
+				textField_1.setText("");
+				textField_3.setText("");
+				textField_4.setText("");
+				comboBox_1.setSelectedItem(null);
+			}
+		});
 
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -217,8 +230,28 @@ public class FoodWindow {
 					} catch (Exception e){
 						e.printStackTrace();
 					}
+				} else {
+					try{
+						DBConn.updateDB(
+								"INSERT INTO FOOD VALUES (NULL, \"" + textField_2.getText() 
+								+ "\",\"" + textField.getText() 
+								+ "\"," + textField_1.getText() 
+								+ "," + textField_3.getText() 
+								+ ",\"" + textField_4.getText() 
+								+ "\",\"" + ((Store)comboBox_1.getSelectedItem()).getId()
+								+ "\");");
+					} catch (Exception e){
+						e.printStackTrace();
+					}
+					frame.dispose();
+				    frame.setVisible(false);
+				    try{
+				    	frame= (new FoodWindow()).frame;
+				    } catch (Exception e){
+				    	e.printStackTrace();
+				    }
+				    frame.setVisible(true);
 				}
-				
 			}
 		});
 	}
