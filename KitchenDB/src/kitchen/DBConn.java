@@ -2,11 +2,12 @@ package kitchen;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-public class DatabaseConnection {
+public class DBConn {
 
 	private static final String userName = "jharve1";
 	private static final String password = "Cosc*tawf";
@@ -28,6 +29,12 @@ public class DatabaseConnection {
 			System.out.println(sqle);
 		}
 		return conn;
+	}
+	
+	public static ResultSet getResults(String query) throws SQLException{
+		Connection conn = DBConn.getConnection();
+		Statement qs = conn.createStatement();
+		return qs.executeQuery(query);
 	}
 
 }

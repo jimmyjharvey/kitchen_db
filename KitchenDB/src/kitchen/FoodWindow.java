@@ -70,7 +70,20 @@ public class FoodWindow {
 		frame.getContentPane().add(btnNewButton);
 
 		JComboBox<Food> comboBox = new JComboBox<Food>();
-		comboBox.addItem(new Food(47, "Pizza", "Yummy yummy Pizza", 3, 1, "PizzaPie", 1));
+		ResultSet foodQuery = DBConn.getResults("SELECT * FROM FOOD;");
+		while(foodQuery.next()){
+			comboBox.addItem(
+				new Food(
+					foodQuery.getInt("FoodID"), 
+					foodQuery.getString("FoodName"), 
+					foodQuery.getString("FoodDescription"), 
+					foodQuery.getInt("InventoryQty"),
+					foodQuery.getInt("MinQty"),
+					foodQuery.getString("StandardMeasure"),
+					foodQuery.getInt("PreferredStore")
+				)
+			);
+		}
 		comboBox.setToolTipText("Select Item ");
 		comboBox.setBounds(26, 144, 265, 24);
 		comboBox.setSelectedItem(null);
@@ -144,7 +157,7 @@ public class FoodWindow {
 		frame.getContentPane().add(lblPreferredStore);
 
 		JComboBox<Store> comboBox_1 = new JComboBox<Store>();
-		ResultSet storeQuery = getStores();
+		ResultSet storeQuery = DBConn.getResults("SELECT * FROM STORE;");
 		while(storeQuery.next()){
 			comboBox_1.addItem(
 				new Store(
@@ -185,10 +198,5 @@ public class FoodWindow {
 		});
 	}
 	
-	public static ResultSet getStores() throws SQLException{
-		Connection conn = DatabaseConnection.getConnection();
-		Statement qs = conn.createStatement();
-		return qs.executeQuery("SELECT * FROM STORE");
-	}
 }
 
