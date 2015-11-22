@@ -51,12 +51,12 @@ public class FoodWindow {
 	private void initialize() throws SQLException {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 18));
-		frame.setBounds(100, 100, 800, 450);
+		frame.setBounds(100, 100, 325, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnNewButton = new JButton("Save");
-		btnNewButton.setBounds(37, 346, 106, 25);
+		btnNewButton.setBounds(26, 255, 106, 25);
 		frame.getContentPane().add(btnNewButton);
 
 		JComboBox<Food> comboBox = new JComboBox<Food>();
@@ -75,75 +75,69 @@ public class FoodWindow {
 			);
 		}
 		comboBox.setToolTipText("Select Item ");
-		comboBox.setBounds(26, 144, 265, 24);
+		comboBox.setBounds(127, 13, 151, 24);
 		comboBox.setSelectedItem(null);
 		frame.getContentPane().add(comboBox);
 		
 		JLabel lblTestLabel = new JLabel("FOOD");
-		lblTestLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTestLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		lblTestLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTestLabel.setBounds(26, 83, 200, 50);
+		lblTestLabel.setBounds(26, 11, 85, 25);
 		frame.getContentPane().add(lblTestLabel);
 		
 		textFieldDescription = new JTextField();
-		textFieldDescription.setBounds(490, 145, 249, 22);
+		textFieldDescription.setBounds(127, 88, 151, 22);
 		frame.getContentPane().add(textFieldDescription);
 		textFieldDescription.setColumns(10);
 		
 		textFieldQty = new JTextField();
-		textFieldQty.setBounds(490, 178, 116, 22);
+		textFieldQty.setBounds(127, 115, 75, 22);
 		frame.getContentPane().add(textFieldQty);
 		textFieldQty.setColumns(10);
 		
 		JLabel lblOnHand = new JLabel("Qty");
-		lblOnHand.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblOnHand.setBounds(340, 184, 131, 16);
+		lblOnHand.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblOnHand.setBounds(26, 117, 131, 16);
 		frame.getContentPane().add(lblOnHand);
 		
 		textFieldMinQty = new JTextField();
 		textFieldMinQty.setColumns(10);
-		textFieldMinQty.setBounds(490, 211, 116, 22);
+		textFieldMinQty.setBounds(127, 148, 75, 22);
 		frame.getContentPane().add(textFieldMinQty);
 		
-		JLabel lblKaransKitchen = new JLabel("KARAN'S KITCHEN");
-		lblKaransKitchen.setHorizontalAlignment(SwingConstants.LEFT);
-		lblKaransKitchen.setFont(new Font("Tahoma", Font.BOLD, 26));
-		lblKaransKitchen.setBounds(357, 28, 311, 50);
-		frame.getContentPane().add(lblKaransKitchen);
-		
 		JLabel lblMin = new JLabel("Min Qty");
-		lblMin.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblMin.setBounds(340, 213, 131, 16);
+		lblMin.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblMin.setBounds(26, 150, 85, 16);
 		frame.getContentPane().add(lblMin);
 		
 		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblDescription.setBounds(340, 151, 131, 16);
+		lblDescription.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblDescription.setBounds(26, 90, 131, 16);
 		frame.getContentPane().add(lblDescription);
 		
 		JLabel lblName = new JLabel("Name");
-		lblName.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblName.setBounds(340, 112, 131, 16);
+		lblName.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblName.setBounds(26, 61, 131, 16);
 		frame.getContentPane().add(lblName);
 		
 		textFieldName = new JTextField();
 		textFieldName.setColumns(10);
-		textFieldName.setBounds(490, 111, 116, 22);
+		textFieldName.setBounds(127, 59, 151, 22);
 		frame.getContentPane().add(textFieldName);
 		
 		JLabel lblStdmeasure = new JLabel("Std Measure");
-		lblStdmeasure.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblStdmeasure.setBounds(340, 241, 131, 16);
+		lblStdmeasure.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblStdmeasure.setBounds(26, 183, 94, 16);
 		frame.getContentPane().add(lblStdmeasure);
 		
 		textFieldStandardMeasure = new JTextField();
 		textFieldStandardMeasure.setColumns(10);
-		textFieldStandardMeasure.setBounds(490, 241, 116, 22);
+		textFieldStandardMeasure.setBounds(127, 181, 151, 22);
 		frame.getContentPane().add(textFieldStandardMeasure);
 		
 		JLabel lblPreferredStore = new JLabel("Preferred Store");
-		lblPreferredStore.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblPreferredStore.setBounds(340, 270, 151, 16);
+		lblPreferredStore.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblPreferredStore.setBounds(26, 213, 106, 16);
 		frame.getContentPane().add(lblPreferredStore);
 
 		JComboBox<Store> comboBoxPreferredStore = new JComboBox<Store>();
@@ -161,11 +155,11 @@ public class FoodWindow {
 		}
 		comboBoxPreferredStore.setToolTipText("Select Item ");
 		comboBoxPreferredStore.setSelectedItem(null);
-		comboBoxPreferredStore.setBounds(490, 271, 131, 24);
+		comboBoxPreferredStore.setBounds(127, 210, 151, 24);
 		frame.getContentPane().add(comboBoxPreferredStore);
 		
 		JButton btnNewItem = new JButton("New Item");
-		btnNewItem.setBounds(166, 347, 106, 25);
+		btnNewItem.setBounds(137, 255, 106, 25);
 		frame.getContentPane().add(btnNewItem);
 		
 		HashMap<Integer, Store> storeMap = new HashMap<>();

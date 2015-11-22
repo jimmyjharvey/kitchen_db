@@ -71,12 +71,12 @@ public class RecipeBuilder {
 	 */
 	private void initialize() throws SQLException {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 650, 550);
+		frame.setBounds(100, 100, 550, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		textFieldFoodQty = new JTextField();
-		textFieldFoodQty.setBounds(394, 153, 84, 20);
+		textFieldFoodQty.setBounds(347, 153, 84, 20);
 		frame.getContentPane().add(textFieldFoodQty);
 		textFieldFoodQty.setColumns(10);
 		
@@ -95,31 +95,31 @@ public class RecipeBuilder {
 				)
 			);
 		}
-		comboBoxFood.setBounds(394, 122, 151, 20);
+		comboBoxFood.setBounds(347, 122, 151, 20);
 		comboBoxFood.setSelectedItem(null);
 		frame.getContentPane().add(comboBoxFood);
 		
 		JTextArea textAreaInstructions = new JTextArea();
-		textAreaInstructions.setBounds(78, 304, 467, 112);
+		textAreaInstructions.setBounds(31, 302, 467, 112);
 		frame.getContentPane().add(textAreaInstructions);
 		
 		JButton btnNewButtonAddIngredient = new JButton("Add Ingredient");
-		btnNewButtonAddIngredient.setBounds(394, 184, 150, 23);
+		btnNewButtonAddIngredient.setBounds(348, 184, 150, 23);
 		frame.getContentPane().add(btnNewButtonAddIngredient);
 		
 		JLabel lblInstructions = new JLabel("Instructions:");
 		lblInstructions.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblInstructions.setBounds(78, 277, 80, 26);
+		lblInstructions.setBounds(31, 277, 80, 26);
 		frame.getContentPane().add(lblInstructions);
 		
 		JLabel lblIngredients = new JLabel("Ingredients:");
 		lblIngredients.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblIngredients.setBounds(78, 98, 80, 26);
+		lblIngredients.setBounds(31, 98, 80, 26);
 		frame.getContentPane().add(lblIngredients);
 		
 		JLabel lblRecipes = new JLabel("Recipe");
-		lblRecipes.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblRecipes.setBounds(78, 25, 80, 26);
+		lblRecipes.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblRecipes.setBounds(31, 11, 80, 26);
 		frame.getContentPane().add(lblRecipes);
 		
 		JComboBox<Recipe> comboBoxRecipes = new JComboBox<>();
@@ -133,37 +133,37 @@ public class RecipeBuilder {
 				)
 			);
 		}
-		comboBoxRecipes.setBounds(178, 29, 196, 20);
+		comboBoxRecipes.setBounds(132, 15, 196, 20);
 		comboBoxRecipes.setSelectedItem(null);
 		frame.getContentPane().add(comboBoxRecipes);
 		
 		JButton btnSave = new JButton("Save");
-		btnSave.setBounds(78, 441, 127, 23);
+		btnSave.setBounds(31, 425, 127, 23);
 		frame.getContentPane().add(btnSave);
 		
 		JButton btnNewRecipe = new JButton("New Recipe");
-		btnNewRecipe.setBounds(215, 441, 127, 23);
+		btnNewRecipe.setBounds(179, 425, 127, 23);
 		frame.getContentPane().add(btnNewRecipe);
 		
 		JList<Ingredient> listIngredients = new JList<>();
-		listIngredients.setBounds(78, 124, 296, 142);
+		listIngredients.setBounds(32, 124, 296, 142);
 		frame.getContentPane().add(listIngredients);
 		
 		JButton btnNewButton = new JButton("Delete Ingredient");
-		btnNewButton.setBounds(394, 243, 150, 23);
+		btnNewButton.setBounds(348, 242, 150, 23);
 		frame.getContentPane().add(btnNewButton);
 		
 		JLabel lblStandardMeasure = new JLabel("");
-		lblStandardMeasure.setBounds(488, 156, 46, 14);
+		lblStandardMeasure.setBounds(452, 159, 46, 14);
 		frame.getContentPane().add(lblStandardMeasure);
 		
 		JLabel lblRecipeName = new JLabel("Recipe Name");
 		lblRecipeName.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblRecipeName.setBounds(78, 62, 80, 26);
+		lblRecipeName.setBounds(31, 61, 80, 26);
 		frame.getContentPane().add(lblRecipeName);
 		
 		textFieldRecipeName = new JTextField();
-		textFieldRecipeName.setBounds(178, 60, 196, 26);
+		textFieldRecipeName.setBounds(132, 62, 196, 26);
 		frame.getContentPane().add(textFieldRecipeName);
 		textFieldRecipeName.setColumns(10);
 		
