@@ -227,7 +227,7 @@ public class RecipeBuilder {
 				try{
 					Recipe recipe = (Recipe) comboBoxRecipes.getSelectedItem();
 					Food food = (Food) comboBoxFood.getSelectedItem();
-					if(recipe != null && food != null){
+					if(recipe != null && food != null && textFieldFoodQty.getText()!=""){
 							DBConn.updateDB("INSERT INTO INGREDIENTS VALUES (" + recipe.getId() + "," + food.getId() + "," + textFieldFoodQty.getText() + ");");
 					}
 				} catch (Exception e){

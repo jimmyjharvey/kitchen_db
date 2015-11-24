@@ -240,12 +240,13 @@ public class MealPlanner {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBoxMealPlans.getSelectedItem() != null){
-					Recipe x = (Recipe)comboBoxMealPlans.getSelectedItem();
+					MealPlan x = (MealPlan)comboBoxMealPlans.getSelectedItem();
 					Cook cook = (Cook) comboBoxChef.getSelectedItem();
 					try{
 						DBConn.updateDB(
 								"UPDATE MEALPLAN SET MealCategory=\"" + textFieldMealCategory.getText() 
-								+ "\",MealDate=\"" + comboBoxDate.getSelectedIndex() 
+								+ "\",MealDate=\"" + (Date) comboBoxDate.getSelectedItem() 
+								+ "\",MealCategory=\"" + textFieldMealCategory.getText() 
 								+ "\",Chef=\"" + cook.getId()
 								+ "\" WHERE PlanID=" + ((MealPlan)comboBoxMealPlans.getSelectedItem()).getId() + ";");
 					} catch (Exception e){
