@@ -10,7 +10,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -97,10 +99,11 @@ public class MealPlanner {
 		lblMealPlans.setBounds(23, 25, 80, 26);
 		frmMealPlanner.getContentPane().add(lblMealPlans);
 		
+		List<MealPlan> mealList = new ArrayList<MealPlan>();
 		JComboBox<MealPlan> comboBoxMealPlans = new JComboBox<>();
-		ResultSet recipeQuery = DBConn.getResults("SELECT * FROM MEALPLAN;");
+		ResultSet recipeQuery = DBConn.getResults("SELECT * FROM MEALPLAN WHERE MealDate >= DATE(NOW());");
 		while(recipeQuery.next()){
-			comboBoxMealPlans.addItem(
+			mealList.add(
 				new MealPlan(
 					recipeQuery.getInt("PlanID"), 
 					recipeQuery.getDate("MealDate"), 
@@ -109,6 +112,8 @@ public class MealPlanner {
 				)
 			);
 		}
+		mealList.sort((x,y) -> x.getDate().compareTo(y.getDate()));
+		mealList.forEach(x -> comboBoxMealPlans.addItem(x));
 		comboBoxMealPlans.setBounds(113, 29, 196, 20);
 		comboBoxMealPlans.setSelectedItem(null);
 		frmMealPlanner.getContentPane().add(comboBoxMealPlans);

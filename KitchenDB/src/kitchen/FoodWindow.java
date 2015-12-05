@@ -19,7 +19,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -63,10 +65,11 @@ public class FoodWindow {
 		btnNewButton.setBounds(26, 255, 106, 25);
 		frame.getContentPane().add(btnNewButton);
 
+		List<Food> foodList = new ArrayList<Food>();
 		JComboBox<Food> comboBox = new JComboBox<Food>();
 		ResultSet foodQuery = DBConn.getResults("SELECT * FROM FOOD;");
 		while(foodQuery.next()){
-			comboBox.addItem(
+			foodList.add(
 				new Food(
 					foodQuery.getInt("FoodID"), 
 					foodQuery.getString("FoodName"), 
@@ -78,6 +81,8 @@ public class FoodWindow {
 				)
 			);
 		}
+		foodList.sort((x,y) -> x.toString().compareTo(y.toString()));
+		foodList.forEach(x -> comboBox.addItem(x));
 		comboBox.setToolTipText("Select Item ");
 		comboBox.setBounds(127, 13, 151, 24);
 		comboBox.setSelectedItem(null);
@@ -202,14 +207,19 @@ public class FoodWindow {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				String qty = textFieldQty.getText();
+				if(qty.equals("")) qty = "0";
+				String minQty = textFieldMinQty.getText();
+				if(minQty.equals("")) minQty = "0";
+				
 				if(comboBox.getSelectedItem() != null){
 					Food x = (Food)comboBox.getSelectedItem();
 					try{
 						DBConn.updateDB(
 								"UPDATE FOOD SET FoodName=\"" + textFieldName.getText() 
 								+ "\",FoodDescription=\"" + textFieldDescription.getText() 
-								+ "\",InventoryQty=\"" + textFieldQty.getText() 
-								+ "\",MinQty=\"" + textFieldMinQty.getText() 
+								+ "\",InventoryQty=\"" + qty 
+								+ "\",MinQty=\"" + minQty
 								+ "\",StandardMeasure=\"" + textFieldStandardMeasure.getText() 
 								+ "\",PreferredStore=\"" + ((Store)comboBoxPreferredStore.getSelectedItem()).getId()
 								+ "\" WHERE FoodID=" + ((Food)comboBox.getSelectedItem()).getId() + ";");
@@ -221,8 +231,8 @@ public class FoodWindow {
 						DBConn.updateDB(
 								"INSERT INTO FOOD VALUES (NULL, \"" + textFieldName.getText() 
 								+ "\",\"" + textFieldDescription.getText() 
-								+ "\"," + textFieldQty.getText() 
-								+ "," + textFieldMinQty.getText() 
+								+ "\"," + qty 
+								+ "," + minQty 
 								+ ",\"" + textFieldStandardMeasure.getText() 
 								+ "\",\"" + ((Store)comboBoxPreferredStore.getSelectedItem()).getId()
 								+ "\");");

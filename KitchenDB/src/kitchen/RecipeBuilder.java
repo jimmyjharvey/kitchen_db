@@ -23,7 +23,9 @@ import java.awt.Font;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.UIManager;
 
@@ -85,10 +87,11 @@ public class RecipeBuilder {
 		frmRecipeBuilder.getContentPane().add(textFieldFoodQty);
 		textFieldFoodQty.setColumns(10);
 		
+		List<Food> foodList = new ArrayList<Food>();
 		JComboBox<Food> comboBoxFood = new JComboBox<>();
 		ResultSet foodQuery = DBConn.getResults("SELECT * FROM FOOD;");
 		while(foodQuery.next()){
-			comboBoxFood.addItem(
+			foodList.add(
 				new Food(
 					foodQuery.getInt("FoodID"), 
 					foodQuery.getString("FoodName"), 
@@ -100,6 +103,8 @@ public class RecipeBuilder {
 				)
 			);
 		}
+		foodList.sort((x,y) -> x.toString().compareTo(y.toString()));
+		foodList.forEach(x -> comboBoxFood.addItem(x));
 		comboBoxFood.setBounds(347, 122, 151, 20);
 		comboBoxFood.setSelectedItem(null);
 		frmRecipeBuilder.getContentPane().add(comboBoxFood);
@@ -127,10 +132,11 @@ public class RecipeBuilder {
 		lblRecipes.setBounds(31, 11, 80, 26);
 		frmRecipeBuilder.getContentPane().add(lblRecipes);
 		
+		List<Recipe> recipeList = new ArrayList<Recipe>();
 		JComboBox<Recipe> comboBoxRecipes = new JComboBox<>();
 		ResultSet recipeQuery = DBConn.getResults("SELECT * FROM RECIPE;");
 		while(recipeQuery.next()){
-			comboBoxRecipes.addItem(
+			recipeList.add(
 				new Recipe(
 					recipeQuery.getInt("RecipeID"), 
 					recipeQuery.getString("RecipeName"), 
@@ -138,6 +144,8 @@ public class RecipeBuilder {
 				)
 			);
 		}
+		recipeList.sort((x,y) -> x.toString().compareTo(y.toString()));
+		recipeList.forEach(x -> comboBoxRecipes.addItem(x));
 		comboBoxRecipes.setBounds(132, 15, 196, 20);
 		comboBoxRecipes.setSelectedItem(null);
 		frmRecipeBuilder.getContentPane().add(comboBoxRecipes);
@@ -231,7 +239,7 @@ public class RecipeBuilder {
 			public void actionPerformed(ActionEvent arg0) {
 				Recipe recipe = (Recipe) comboBoxRecipes.getSelectedItem();
 				Food f = (Food) comboBoxFood.getSelectedItem();
-				if(recipe != null && f != null && textFieldFoodQty.getText()!=""){
+				if(recipe != null && f != null && !textFieldFoodQty.getText().equals("")){
 					try{
 						DBConn.updateDB("INSERT INTO INGREDIENTS VALUES (" + recipe.getId() + "," + f.getId() + "," + textFieldFoodQty.getText() + ");");
 					} catch (Exception e){
