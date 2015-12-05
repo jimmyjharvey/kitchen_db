@@ -39,9 +39,13 @@ import java.awt.event.ItemEvent;
 
 public class RecipeBuilder {
 
-	private JFrame frame;
+	private JFrame frmRecipeBuilder;
 	private JTextField textFieldFoodQty;
 	private JTextField textFieldRecipeName;
+	
+	public JFrame getForm(){
+		return frmRecipeBuilder;
+	}
 
 	/**
 	 * Launch the application.
@@ -51,7 +55,7 @@ public class RecipeBuilder {
 			public void run() {
 				try {
 					RecipeBuilder window = new RecipeBuilder();
-					window.frame.setVisible(true);
+					window.frmRecipeBuilder.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -70,14 +74,15 @@ public class RecipeBuilder {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() throws SQLException {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 550, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmRecipeBuilder = new JFrame();
+		frmRecipeBuilder.setTitle("Recipe Builder");
+		frmRecipeBuilder.setBounds(100, 100, 550, 500);
+		frmRecipeBuilder.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmRecipeBuilder.getContentPane().setLayout(null);
 		
 		textFieldFoodQty = new JTextField();
 		textFieldFoodQty.setBounds(347, 153, 84, 20);
-		frame.getContentPane().add(textFieldFoodQty);
+		frmRecipeBuilder.getContentPane().add(textFieldFoodQty);
 		textFieldFoodQty.setColumns(10);
 		
 		JComboBox<Food> comboBoxFood = new JComboBox<>();
@@ -97,30 +102,30 @@ public class RecipeBuilder {
 		}
 		comboBoxFood.setBounds(347, 122, 151, 20);
 		comboBoxFood.setSelectedItem(null);
-		frame.getContentPane().add(comboBoxFood);
+		frmRecipeBuilder.getContentPane().add(comboBoxFood);
 		
 		JTextArea textAreaInstructions = new JTextArea();
 		textAreaInstructions.setBounds(31, 302, 467, 112);
-		frame.getContentPane().add(textAreaInstructions);
+		frmRecipeBuilder.getContentPane().add(textAreaInstructions);
 		
 		JButton btnNewButtonAddIngredient = new JButton("Add Ingredient");
 		btnNewButtonAddIngredient.setBounds(348, 184, 150, 23);
-		frame.getContentPane().add(btnNewButtonAddIngredient);
+		frmRecipeBuilder.getContentPane().add(btnNewButtonAddIngredient);
 		
 		JLabel lblInstructions = new JLabel("Instructions:");
 		lblInstructions.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblInstructions.setBounds(31, 277, 80, 26);
-		frame.getContentPane().add(lblInstructions);
+		frmRecipeBuilder.getContentPane().add(lblInstructions);
 		
 		JLabel lblIngredients = new JLabel("Ingredients:");
 		lblIngredients.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblIngredients.setBounds(31, 98, 80, 26);
-		frame.getContentPane().add(lblIngredients);
+		frmRecipeBuilder.getContentPane().add(lblIngredients);
 		
 		JLabel lblRecipes = new JLabel("Recipe");
 		lblRecipes.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		lblRecipes.setBounds(31, 11, 80, 26);
-		frame.getContentPane().add(lblRecipes);
+		frmRecipeBuilder.getContentPane().add(lblRecipes);
 		
 		JComboBox<Recipe> comboBoxRecipes = new JComboBox<>();
 		ResultSet recipeQuery = DBConn.getResults("SELECT * FROM RECIPE;");
@@ -135,36 +140,36 @@ public class RecipeBuilder {
 		}
 		comboBoxRecipes.setBounds(132, 15, 196, 20);
 		comboBoxRecipes.setSelectedItem(null);
-		frame.getContentPane().add(comboBoxRecipes);
+		frmRecipeBuilder.getContentPane().add(comboBoxRecipes);
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(31, 425, 127, 23);
-		frame.getContentPane().add(btnSave);
+		frmRecipeBuilder.getContentPane().add(btnSave);
 		
 		JButton btnNewRecipe = new JButton("New Recipe");
 		btnNewRecipe.setBounds(179, 425, 127, 23);
-		frame.getContentPane().add(btnNewRecipe);
+		frmRecipeBuilder.getContentPane().add(btnNewRecipe);
 		
 		JList<Ingredient> listIngredients = new JList<>();
 		listIngredients.setBounds(32, 124, 296, 142);
-		frame.getContentPane().add(listIngredients);
+		frmRecipeBuilder.getContentPane().add(listIngredients);
 		
 		JButton btnNewButton = new JButton("Delete Ingredient");
 		btnNewButton.setBounds(348, 242, 150, 23);
-		frame.getContentPane().add(btnNewButton);
+		frmRecipeBuilder.getContentPane().add(btnNewButton);
 		
 		JLabel lblStandardMeasure = new JLabel("");
 		lblStandardMeasure.setBounds(452, 159, 46, 14);
-		frame.getContentPane().add(lblStandardMeasure);
+		frmRecipeBuilder.getContentPane().add(lblStandardMeasure);
 		
 		JLabel lblRecipeName = new JLabel("Recipe Name");
 		lblRecipeName.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblRecipeName.setBounds(31, 61, 80, 26);
-		frame.getContentPane().add(lblRecipeName);
+		frmRecipeBuilder.getContentPane().add(lblRecipeName);
 		
 		textFieldRecipeName = new JTextField();
 		textFieldRecipeName.setBounds(132, 62, 196, 26);
-		frame.getContentPane().add(textFieldRecipeName);
+		frmRecipeBuilder.getContentPane().add(textFieldRecipeName);
 		textFieldRecipeName.setColumns(10);
 		
 		//Maps all the food in the comboBox
@@ -224,40 +229,40 @@ public class RecipeBuilder {
 		//Add new ingredients
 		btnNewButtonAddIngredient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try{
-					Recipe recipe = (Recipe) comboBoxRecipes.getSelectedItem();
-					Food food = (Food) comboBoxFood.getSelectedItem();
-					if(recipe != null && food != null && textFieldFoodQty.getText()!=""){
-							DBConn.updateDB("INSERT INTO INGREDIENTS VALUES (" + recipe.getId() + "," + food.getId() + "," + textFieldFoodQty.getText() + ");");
+				Recipe recipe = (Recipe) comboBoxRecipes.getSelectedItem();
+				Food f = (Food) comboBoxFood.getSelectedItem();
+				if(recipe != null && f != null && textFieldFoodQty.getText()!=""){
+					try{
+						DBConn.updateDB("INSERT INTO INGREDIENTS VALUES (" + recipe.getId() + "," + f.getId() + "," + textFieldFoodQty.getText() + ");");
+					} catch (Exception e){
+						e.printStackTrace();
 					}
-				} catch (Exception e){
-					e.printStackTrace();
-				}
-				Recipe x = (Recipe) comboBoxRecipes.getSelectedItem();
-				textFieldRecipeName.setText(x.getName());
-				textAreaInstructions.setText(x.getInstructions());
-				listIngredients.removeAll();
-				try{
-					DefaultListModel<Ingredient> model = new DefaultListModel<>();
-					ResultSet ingredientQuery = DBConn.getResults("SELECT * FROM INGREDIENTS WHERE RecipeID=" + x.getId() + ";");
-					while(ingredientQuery.next()){
-						int foodID = ingredientQuery.getInt("FoodID");
-						Food food = foodMap.get(foodID);
-						model.addElement(
-							new Ingredient(
-								foodID,
-								ingredientQuery.getInt("RecipeID"),
-								ingredientQuery.getInt("Qty"), 
-								food.getName(),
-								food.getStandardMeasure()
-							)
-						);
+					Recipe x = (Recipe) comboBoxRecipes.getSelectedItem();
+					textFieldRecipeName.setText(x.getName());
+					textAreaInstructions.setText(x.getInstructions());
+					listIngredients.removeAll();
+					try{
+						DefaultListModel<Ingredient> model = new DefaultListModel<>();
+						ResultSet ingredientQuery = DBConn.getResults("SELECT * FROM INGREDIENTS WHERE RecipeID=" + x.getId() + ";");
+						while(ingredientQuery.next()){
+							int foodID = ingredientQuery.getInt("FoodID");
+							Food food = foodMap.get(foodID);
+							model.addElement(
+								new Ingredient(
+									foodID,
+									ingredientQuery.getInt("RecipeID"),
+									ingredientQuery.getInt("Qty"), 
+									food.getName(),
+									food.getStandardMeasure()
+								)
+							);
+						}
+						listIngredients.setModel(model);
+					} catch (SQLException se) {
+						se.printStackTrace();
 					}
-					listIngredients.setModel(model);
-				} catch (SQLException se) {
-					se.printStackTrace();
+					comboBoxFood.setSelectedItem(null);
 				}
-				comboBoxFood.setSelectedItem(null);
 			}
 		});
 
@@ -282,14 +287,14 @@ public class RecipeBuilder {
 					} catch (Exception e){
 						e.printStackTrace();
 					}
-					frame.dispose();
-				    frame.setVisible(false);
+					frmRecipeBuilder.dispose();
+				    frmRecipeBuilder.setVisible(false);
 				    try{
-				    	frame = (new RecipeBuilder()).frame;
+				    	frmRecipeBuilder = (new RecipeBuilder()).frmRecipeBuilder;
 				    } catch (Exception e){
 				    	e.printStackTrace();
 				    }
-				    frame.setVisible(true);
+				    frmRecipeBuilder.setVisible(true);
 				}
 			}
 		});

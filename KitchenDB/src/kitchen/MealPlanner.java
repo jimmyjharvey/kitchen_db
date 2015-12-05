@@ -29,8 +29,12 @@ import kitchen.model.Recipe;
 
 public class MealPlanner {
 
-	private JFrame frame;
+	private JFrame frmMealPlanner;
 	private JTextField textFieldMealCategory;
+	
+	public JFrame getForm(){
+		return frmMealPlanner;
+	}
 
 	/**
 	 * Launch the application.
@@ -40,7 +44,7 @@ public class MealPlanner {
 			public void run() {
 				try {
 					MealPlanner window = new MealPlanner();
-					window.frame.setVisible(true);
+					window.frmMealPlanner.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,10 +63,10 @@ public class MealPlanner {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() throws SQLException {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 500, 400);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmMealPlanner = new JFrame();
+		frmMealPlanner.setBounds(100, 100, 500, 400);
+		frmMealPlanner.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmMealPlanner.getContentPane().setLayout(null);
 		
 		JComboBox<Recipe> comboBoxRecipe = new JComboBox<>();
 		ResultSet foodQuery = DBConn.getResults("SELECT * FROM RECIPE;");
@@ -77,21 +81,21 @@ public class MealPlanner {
 		}
 		comboBoxRecipe.setBounds(319, 186, 151, 20);
 		comboBoxRecipe.setSelectedItem(null);
-		frame.getContentPane().add(comboBoxRecipe);
+		frmMealPlanner.getContentPane().add(comboBoxRecipe);
 		
 		JButton btnNewButtonAddIngredient = new JButton("Add Recipe");
 		btnNewButtonAddIngredient.setBounds(319, 217, 150, 23);
-		frame.getContentPane().add(btnNewButtonAddIngredient);
+		frmMealPlanner.getContentPane().add(btnNewButtonAddIngredient);
 		
 		JLabel lblRecipes = new JLabel("Recipes:");
 		lblRecipes.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblRecipes.setBounds(23, 162, 80, 26);
-		frame.getContentPane().add(lblRecipes);
+		frmMealPlanner.getContentPane().add(lblRecipes);
 		
 		JLabel lblMealPlans = new JLabel("Meal Plan");
 		lblMealPlans.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMealPlans.setBounds(23, 25, 80, 26);
-		frame.getContentPane().add(lblMealPlans);
+		frmMealPlanner.getContentPane().add(lblMealPlans);
 		
 		JComboBox<MealPlan> comboBoxMealPlans = new JComboBox<>();
 		ResultSet recipeQuery = DBConn.getResults("SELECT * FROM MEALPLAN;");
@@ -107,42 +111,42 @@ public class MealPlanner {
 		}
 		comboBoxMealPlans.setBounds(113, 29, 196, 20);
 		comboBoxMealPlans.setSelectedItem(null);
-		frame.getContentPane().add(comboBoxMealPlans);
+		frmMealPlanner.getContentPane().add(comboBoxMealPlans);
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(23, 322, 127, 23);
-		frame.getContentPane().add(btnSave);
+		frmMealPlanner.getContentPane().add(btnSave);
 		
 		JButton btnNewMealPlan = new JButton("New Meal Plan");
 		btnNewMealPlan.setBounds(160, 322, 127, 23);
-		frame.getContentPane().add(btnNewMealPlan);
+		frmMealPlanner.getContentPane().add(btnNewMealPlan);
 		
 		JList<Recipe> listRecipes = new JList<>();
 		listRecipes.setBounds(23, 188, 286, 111);
-		frame.getContentPane().add(listRecipes);
+		frmMealPlanner.getContentPane().add(listRecipes);
 		
 		JButton btnNewButton = new JButton("Delete Recipe");
 		btnNewButton.setBounds(319, 276, 150, 23);
-		frame.getContentPane().add(btnNewButton);
+		frmMealPlanner.getContentPane().add(btnNewButton);
 		
 		JLabel lblMealCategory = new JLabel("Chef");
 		lblMealCategory.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMealCategory.setBounds(23, 87, 100, 26);
-		frame.getContentPane().add(lblMealCategory);
+		frmMealPlanner.getContentPane().add(lblMealCategory);
 		
 		textFieldMealCategory = new JTextField();
 		textFieldMealCategory.setBounds(159, 117, 150, 26);
-		frame.getContentPane().add(textFieldMealCategory);
+		frmMealPlanner.getContentPane().add(textFieldMealCategory);
 		textFieldMealCategory.setColumns(10);
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblDate.setBounds(23, 56, 100, 26);
-		frame.getContentPane().add(lblDate);
+		frmMealPlanner.getContentPane().add(lblDate);
 		
 		JComboBox<Date> comboBoxDate = new JComboBox<Date>();
 		comboBoxDate.setBounds(113, 56, 196, 20);
-		frame.getContentPane().add(comboBoxDate);
+		frmMealPlanner.getContentPane().add(comboBoxDate);
 		LocalDate now = LocalDate.now();
 		for(int i=0; i<14; i++) comboBoxDate.addItem(Date.valueOf(now.plusDays(i)));
 		comboBoxDate.setSelectedItem(null);
@@ -150,11 +154,11 @@ public class MealPlanner {
 		JLabel label = new JLabel("Meal Category");
 		label.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		label.setBounds(23, 116, 100, 26);
-		frame.getContentPane().add(label);
+		frmMealPlanner.getContentPane().add(label);
 		
 		JComboBox<Cook> comboBoxChef = new JComboBox<>();
 		comboBoxChef.setBounds(113, 87, 196, 20);
-		frame.getContentPane().add(comboBoxChef);
+		frmMealPlanner.getContentPane().add(comboBoxChef);
 		ResultSet chefQuery = DBConn.getResults("SELECT * FROM COOK;");
 		while(chefQuery.next()){
 			comboBoxChef.addItem(
@@ -262,14 +266,14 @@ public class MealPlanner {
 					} catch (Exception e){
 						e.printStackTrace();
 					}
-					frame.dispose();
-				    frame.setVisible(false);
+					frmMealPlanner.dispose();
+				    frmMealPlanner.setVisible(false);
 				    try{
-				    	frame = (new MealPlanner()).frame;
+				    	frmMealPlanner = (new MealPlanner()).frmMealPlanner;
 				    } catch (Exception e){
 				    	e.printStackTrace();
 				    }
-				    frame.setVisible(true);
+				    frmMealPlanner.setVisible(true);
 				}
 			}
 		});

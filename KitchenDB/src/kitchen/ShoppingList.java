@@ -12,7 +12,11 @@ import java.awt.Font;
 
 public class ShoppingList {
 
-	private JFrame frame;
+	private JFrame frmShoppingList;
+	
+	public JFrame getForm(){
+		return frmShoppingList;
+	}
 
 	/**
 	 * Launch the application.
@@ -22,7 +26,7 @@ public class ShoppingList {
 			public void run() {
 				try {
 					ShoppingList window = new ShoppingList();
-					window.frame.setVisible(true);
+					window.frmShoppingList.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,19 +47,15 @@ public class ShoppingList {
 	 * @throws SQLException 
 	 */
 	private void initialize() throws SQLException {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 350, 450);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmShoppingList = new JFrame();
+		frmShoppingList.setTitle("Shopping List");
+		frmShoppingList.setBounds(100, 100, 290, 360);
+		frmShoppingList.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmShoppingList.getContentPane().setLayout(null);
 		
 		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(24, 64, 289, 325);
-		frame.getContentPane().add(editorPane);
-		
-		JLabel lblShoppingList = new JLabel("Shopping List");
-		lblShoppingList.setFont(new Font("Times New Roman", Font.BOLD, 30));
-		lblShoppingList.setBounds(76, 11, 190, 42);
-		frame.getContentPane().add(lblShoppingList);
+		editorPane.setBounds(10, 11, 250, 300);
+		frmShoppingList.getContentPane().add(editorPane);
 		
 		/*		
 		 * SELECT FoodName, SUM(Qty)-AVG(InventoryQty)+AVG(MinQty) AS QtyNeeded, StandardMeasure

@@ -30,6 +30,10 @@ public class FoodWindow {
 	private JTextField textFieldMinQty;
 	private JTextField textFieldName;
 	private JTextField textFieldStandardMeasure;
+	
+	public JFrame getForm(){
+		return frame;
+	}
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -52,7 +56,7 @@ public class FoodWindow {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 18));
 		frame.setBounds(100, 100, 325, 350);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnNewButton = new JButton("Save");
