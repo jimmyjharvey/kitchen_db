@@ -9,11 +9,31 @@ import java.util.Properties;
 
 public class DBConn {
 
-	private static final String userName = "jharve1";
-	private static final String password = "Cosc*tawf";
-	private static final String serverName = "127.0.0.1";
-	private static final int portNumber = 5030;
-	private static final String dbName = "jharve1db";
+	private static String userName = "jharve1";
+	private static String password = "Cosc*tawf";
+	private static String serverName = "127.0.0.1";
+	private static String portNumber = "5030";
+	private static String dbName = "jharve1db";
+	
+	public static void setUserName(String x){
+		userName = x;
+	}
+	
+	public static void setPassword(String x){
+		password = x;
+	}
+	
+	public static void setServerName(String x){
+		serverName = x;
+	}
+	
+	public static void setPortNumber(String x){
+		portNumber = x;
+	}
+	
+	public static void setDBName(String x){
+		dbName = x;
+	}
 	
 	public static Connection getConnection() {
 		Connection conn = null;

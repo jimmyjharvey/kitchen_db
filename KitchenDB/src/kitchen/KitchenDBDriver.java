@@ -43,7 +43,7 @@ public class KitchenDBDriver {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 244, 237);
+		frame.setBounds(100, 100, 244, 259);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -62,7 +62,7 @@ public class KitchenDBDriver {
 				});
 			}
 		});
-		btnRecipeBuilder.setBounds(42, 49, 135, 23);
+		btnRecipeBuilder.setBounds(42, 80, 135, 23);
 		frame.getContentPane().add(btnRecipeBuilder);
 		
 		JLabel lblKitchenDbManager = new JLabel("Kitchen DB Manager");
@@ -85,7 +85,7 @@ public class KitchenDBDriver {
 				});
 			}
 		});
-		button.setBounds(42, 83, 135, 23);
+		button.setBounds(42, 114, 135, 23);
 		frame.getContentPane().add(button);
 		
 		JButton btnMealPlanner = new JButton("Meal Planner");
@@ -103,7 +103,7 @@ public class KitchenDBDriver {
 				});
 			}
 		});
-		btnMealPlanner.setBounds(42, 117, 135, 23);
+		btnMealPlanner.setBounds(42, 148, 135, 23);
 		frame.getContentPane().add(btnMealPlanner);
 		
 		JButton btnGenerateShoppingList = new JButton("Generate Shopping List");
@@ -122,7 +122,25 @@ public class KitchenDBDriver {
 			}
 		});
 		btnGenerateShoppingList.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnGenerateShoppingList.setBounds(10, 151, 207, 27);
+		btnGenerateShoppingList.setBounds(10, 182, 207, 27);
 		frame.getContentPane().add(btnGenerateShoppingList);
+		
+		JButton btnDbConfig = new JButton("DB Config");
+		btnDbConfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							DBConnWindow window = new DBConnWindow();
+							window.getForm().setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		btnDbConfig.setBounds(42, 49, 135, 23);
+		frame.getContentPane().add(btnDbConfig);
 	}
 }
