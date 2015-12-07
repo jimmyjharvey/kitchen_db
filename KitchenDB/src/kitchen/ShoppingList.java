@@ -68,14 +68,22 @@ public class ShoppingList {
 		 *   GROUP BY F.FoodID 
 		 *   HAVING (SUM(Qty)-AVG(InventoryQty)+AVG(MinQty)) > 0;
 		*/
-		ResultSet shoppingListQuery = DBConn.getResults("SELECT FoodName, SUM(Qty)-AVG(InventoryQty)+AVG(MinQty) AS QtyNeeded, StandardMeasure FROM MEALPLAN M, PLANRECIPE P, INGREDIENTS I, FOOD F WHERE F.FoodID=I.FoodID AND P.RecipeID=I.RecipeID AND M.PlanID=P.PlanID AND MealDate >= DATE(NOW()) AND MealDate <= DATE(NOW() + INTERVAL 14 DAY) GROUP BY F.FoodID HAVING (SUM(Qty)-AVG(InventoryQty)+AVG(MinQty)) > 0;");
-	
-		StringBuilder sb = new StringBuilder("");
+		ResultSet shoppingListQuery = DBConn.getResults("SELECT FoodName, PreferredStore, SUM(Qty)-AVG(InventoryQty)+AVG(MinQty) AS QtyNeeded, StandardMeasure FROM MEALPLAN M, PLANRECIPE P, INGREDIENTS I, FOOD F WHERE F.FoodID=I.FoodID AND P.RecipeID=I.RecipeID AND M.PlanID=P.PlanID AND MealDate >= DATE(NOW()) AND MealDate <= DATE(NOW() + INTERVAL 14 DAY) GROUP BY F.FoodID HAVING (SUM(Qty)-AVG(InventoryQty)+AVG(MinQty)) > 0;");
+
+		StringBuilder CostcoSB = new StringBuilder("Costco\n");
+		StringBuilder HarrisTeeterSB = new StringBuilder("Harris Teeter\n");
+		StringBuilder ShoppersSB = new StringBuilder("Shoppers\n");
 		while(shoppingListQuery.next()){
 			int qtyNeeded = (int) Double.parseDouble(shoppingListQuery.getString("QtyNeeded"));
-			sb.append(qtyNeeded + " " + shoppingListQuery.getString("StandardMeasure") + "\t" + shoppingListQuery.getString("FoodName") + "\n");
+			if(shoppingListQuery.getString("PreferredStore").equals("2")){
+				CostcoSB.append(qtyNeeded + " " + shoppingListQuery.getString("StandardMeasure") + "\t" + shoppingListQuery.getString("FoodName") + "\n");
+			} else if (shoppingListQuery.getString("PreferredStore").equals("1")) {
+				ShoppersSB.append(qtyNeeded + " " + shoppingListQuery.getString("StandardMeasure") + "\t" + shoppingListQuery.getString("FoodName") + "\n");
+			} else {
+				HarrisTeeterSB.append(qtyNeeded + " " + shoppingListQuery.getString("StandardMeasure") + "\t" + shoppingListQuery.getString("FoodName") + "\n");
+			}
 		}
 		
-		editorPane.setText(sb.toString());
+		editorPane.setText(CostcoSB.toString() + "\n\n" + HarrisTeeterSB.toString() + "\n\n" + ShoppersSB.toString() + "\n\n");
 	}
 }
